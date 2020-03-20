@@ -70,7 +70,6 @@ class strategy_test(object):
         ax2 = ax.twinx() # Create another axes that shares the same x-axis as ax.
 
         width = 0.4
-        print(summary)
         summary['precision'].plot(kind='bar', color='orange', ax=ax, width=width, position=1)
         summary['avg_return'].plot(kind='bar', color='blue', ax=ax2, width=width, position=0)
         ax.set_title(' '.join(['signal:',signal,'action:',self.rules['action'],'prediction:',pred,start.strftime("%Y%m%d"),'to',end.strftime("%Y%m%d")]))
@@ -83,7 +82,7 @@ class strategy_test(object):
             y1=abs(l-buffer)/(h+buffer)*1.05
             ax.set_ylim([-y1, 1.05])
             ax2.set_ylim([l-buffer,h+buffer])
-        elif h<0: 
+        elif h<=0: 
             h1=1.05*summary['precision'].max()
             h2=h*1.2
             ax2.set_ylim([h2,-h2])
