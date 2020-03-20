@@ -44,12 +44,17 @@ def ml_config(period):
        'LINEARREG_ANGLE':time_periods,'STDDEV':time_periods,
         'HT_TRENDMODE':[[]],'HT_DCPERIOD':[[]],'HT_SINE':[[]],'HT_DCPHASE':[[]]}
     return config
+
 def feature_selection(X,Y,num_features=5):
     selector = SelectKBest(f_regression, k=num_features)
     selector.fit(X, Y)
     scores = -np.log10(selector.pvalues_)
-    plt.plot(scores)
-    return selector.get_support(indices=True)
+    fig = plt.gcf()
+    fig.set_size_inches(18, 6)
+    plt.plot(X.columns,scores,'r-*',label='negative log p values')
+    plt.xticks(rotation=90)
+    plt.legend()
+    return list(selector.get_support(indices=True))
 
 def fit_techs(X,Y,tech_name,target,num=5):
     #tech_name:'RSI'
@@ -57,7 +62,7 @@ def fit_techs(X,Y,tech_name,target,num=5):
     model = make_pipeline(
             SelectKBest(f_regression, k=num), MinMaxScaler(), RandomForestRegressor()
     )
-    tt=get_split_index(X.shape[0],5)
+    tt=get_split_index_by_window(X.shape[0])
     for x in tt:
         test_on_window(X,Y,x,tech_name,target,model)
 
