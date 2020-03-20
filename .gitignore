@@ -1,0 +1,9 @@
+.ipynb_checkpoints/
+__pycache__/
+data/
+figures/
+hypers/
+model/
+results/
+test/
+
