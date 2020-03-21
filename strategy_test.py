@@ -90,22 +90,24 @@ class strategy_test(object):
         filename='_'.join([self.rules['action'],signal,pred,start.strftime("%Y%m%d"),end.strftime("%Y%m%d")])
         fig.savefig('./test/'+filename+'.png')
         summary.to_csv ('./results/'+filename+'.csv')
-    def signal_testing(self, start, end):
+    def signal_testing(self, start, end,hypers=None):
         signal=self.rules['signal']
         pred=self.rules['y']
         result = pd.concat([self.regressor.loc[start:end,[signal]], self.targets.loc[start:end,[pred]]], axis=1, join='inner')
         result=result.dropna()
         l=int(result[signal].min())-1
         h=int(result[signal].max())+1
-        hypers=[int(x) for x in np.linspace(l,h,20)]
+        if hypers==None:
+            hypers=[int(x) for x in np.linspace(l,h,10)]
         temp=[]
         for x in hypers:
             bd=x
-            temp.append((int(x),self.signal_stats(result,signal,pred,bd)))
+            temp.append((x,self.signal_stats(result,signal,pred,bd)))
         summary= pd.DataFrame({"boundary":hypers, 
-                       "avg_return":[(x[1]['FP']['sum']+x[1]['TP']['sum'])/(x[1]['FP']['count']+x[1]['TP']['count']) for x in temp],
-                      "precision":[x[1]['TP']['count']/(x[1]['FP']['count']+x[1]['TP']['count']) for x in temp]})
+                       "avg_return":[self.calc_avg_return(x) for x in temp],
+                      "precision":[self.calc_precision(x) for x in temp]})
         summary.set_index('boundary',inplace=True)
+        summary.sort_index(inplace=True)
         summary.dropna(inplace=True)
         fig_width = 12
         fig_height = 6
@@ -124,12 +126,12 @@ class strategy_test(object):
         buffer=0.05*(h-l)
         if l*h<0:
             y1=abs(l-buffer)/(h+buffer)*1.05
-            ax.set_ylim([-h1, h1])
+            ax.set_ylim([-y1, 1.05])
             ax2.set_ylim([l-buffer,h+buffer])
-        elif h<0: 
+        elif h<=0: 
             h1=1.05*summary['precision'].max()
             h2=h*1.2
             ax2.set_ylim([h2,-h2])
-            ax.set_ylim([-h1, h1])   
+            ax.set_ylim([-h1, h1]) 
         filename='_'.join([self.rules['action'],signal,pred,start.strftime("%Y%m%d"),end.strftime("%Y%m%d")])
         fig.savefig('./test/'+filename+'.png')         
