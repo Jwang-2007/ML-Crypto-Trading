@@ -40,7 +40,7 @@ I am on the way to develop a web application about this project. In the mean tim
 **single_indicator_strategy.ipynb**: how to use machine learning to improve the performance of single functioning indecator.
 **traditional_technique_analysis.ipynb**: analyze traditional use of technique indicators and its performance.
 
-The production module is in the foler */cqt*.
+The production module is in the folder **./cqt**.
 
 
 
