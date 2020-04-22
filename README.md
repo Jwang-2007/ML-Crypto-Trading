@@ -29,8 +29,20 @@ functions to track the changes on the asset holdings and cash
 5. **Strategy**: Valuation engine that combines Env and Ledger. It takes the signals generated from
 Env, and follow the strategy logic to update the Ledger. Back testing is provided to test the 
 strategy against the historical data in the Env. New strategies be derived from the base class simply
-and one can implement their own trading logic
+and one can implement their own trading logic.
 
 6. **Execution**: It provides linkage with certain exchange API, which can execute the strategy based
 on the ledger information
+
+I am on the way to develop a web application about this project. In the mean time, if you are interested about the model building and other technique details, checkout these notebooks below:
+
+**composite_indicators_strategy.ipynb**: combine multiple indicators to generate buy/sell recommendation.
+**single_indicator_strategy.ipynb**: how to use machine learning to improve the performance of single functioning indecator.
+**traditional_technique_analysis.ipynb**: analyze traditional use of technique indicators and its performance.
+
+The production module is in the foler */cqt*.
+
+
+
+
 
