@@ -1,6 +1,14 @@
-# The CQT (Crypto Quant Trading) Package
+# The Machine Learning Crypto Trading Package
 
-The CQT package is a package for crypto quant trading. It includes the following component:
+An end-to-end solution for analyzing and trading in the crypto-currency market, based on traditional technique
+indicators and machine learning techniques to help average investor find a customized quant strategy.
+
+A pipeline was developed from raw trading data to technique indicators, machine learning models
+(tune and combine indicators smartly) and back-testing performance. It generates buy-sell recommendation based
+on back-testing results with historical precision and average returns related statistics. This project hope to help
+investors improve performance without losing explicability.
+
+It consists of the following components:
 
 1. **DataGen**: Unified interface for data query and processing. Specific data objects are designed to 
 handle various trading data for crypto assets. It contains utility functions to query data from 
@@ -25,3 +33,4 @@ and one can implement their own trading logic
 
 6. **Execution**: It provides linkage with certain exchange API, which can execute the strategy based
 on the ledger information
+
